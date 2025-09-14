@@ -1,51 +1,74 @@
-# Finanzierungs-Optimierung Pro
+# Loan Dolphin 🐬
 
-Eine interaktive Web-Anwendung zur Analyse, Optimierung und zum Vergleich von Baufinanzierungsszenarien. Dieses Tool hilft Ihnen, die Auswirkungen verschiedener Parameter wie Zinssätze, Tilgungsraten und Sondertilgungen auf Ihre Finanzierung zu verstehen.
+Interaktive Web‑App zur Analyse, Optimierung und zum Vergleich von Baufinanzierungs­szenarien.
+Loan Dolphin hilft, die Effekte von Zinssätzen, Tilgung und Sondertilgungen auf Raten,
+Restschulden und Zinskosten schnell zu verstehen.
 
 ## ✨ Features
 
-*   **Interaktive Parameter:** Passen Sie alle relevanten Variablen über Schieberegler und Eingabefelder an und sehen Sie die Ergebnisse in Echtzeit.
-*   **Szenario-Vergleich:** Speichern Sie eine Konfiguration als "Szenario A" und vergleichen Sie sie direkt mit einer aktuellen "Szenario B", um die beste Strategie zu finden.
-*   **Detaillierter Tilgungsplan:** Sehen Sie eine jahresweise Aufschlüsselung von Zinsen, Tilgung und Restschuld über die gesamte Laufzeit.
-*   **Restschuldberechnung:** Ermitteln Sie die exakte Restschuld am Ende Ihrer Zinsbindungsfrist.
-*   **Gesamtkostenanalyse:** Berechnen Sie die Summe aller Zinszahlungen, um die wahren Kosten Ihrer Finanzierung zu verstehen.
-*   **Flexible Sondertilgungen:** Planen Sie jährliche Sondertilgungen über eine Tabelle. Wählen Sie zwischen einer automatischen Verteilung auf die teuersten Kredite oder einer manuellen Zuweisung pro Kredit und Jahr. Ein Standardwert kann für die automatische Verteilung gesetzt werden.
-*   **Visuelle Auswertung:** Kreisdiagramme zeigen die Aufteilung der Finanzierungsbausteine pro Partei.
+- Interaktive Parameter: Alle Eingaben in der Sidebar mit Live‑Ergebnis.
+- Szenario‑Vergleich A/B: Aktuelle Konfiguration als „Szenario A“ speichern und mit „Szenario B“ vergleichen.
+- Detaillierte Tilgungspläne: Jahresweise Zinsen, Tilgung, Sondertilgung, Restschuld je Kredit.
+- Sondertilgung: Automatische Verteilung auf die jeweils teuersten Kredite oder manuelle Eingabe pro Kredit/Jahr.
+- Kennzahlen: Gesamtrate, Zinskosten gesamt und je Partei, Restschuld nach Zinsbindung.
+- Visualisierung: Kosten‑Deckung (Eigenkapital/Zuschüsse/Kredite) und gestapelte Flächen je Produkt.
 
-## 🚀 Setup & Start
+## 🧭 Projektstruktur
 
-Um die Anwendung lokal auszuführen, benötigen Sie Python 3.8+ und einige Bibliotheken.
+- `app.py`: Streamlit‑Einstiegspunkt der App (Loan Dolphin).
+- `core/`
+  - `calculations.py`: Zuteilung, Raten, Tilgungspläne, Sondertilgungen, Kennzahlen.
+  - `helpers.py`: Konstanten und Hilfsfunktionen (Key‑Mapping, DataFrame‑Utils).
+- `ui/`
+  - `sidebar.py`: Alle Eingaben samt Tabellen für Sondertilgung (auto/manuell).
+  - `layout.py`: Vergleichs‑ und Detail‑Tabs, KPIs und Charts.
+- `charts/`
+  - `pies.py`, `areas.py`, `colors.py`: Plotly‑Diagramme und Farbkonzept.
+- `loan_dolphin.py`: Legacy‑Datei der früheren monolithischen Version (nur Referenz).
+- `make_standalone.py`: Optionales Script zur Paketierung als Einzeldatei.
 
-1.  **Klonen oder Herunterladen**
+## 🚀 Installation & Start
 
-    Laden Sie die Datei `finanzierungs_app_pro.py` herunter oder klonen Sie das Repository.
+Voraussetzungen: Python 3.10+ empfohlen.
 
-2.  **Abhängigkeiten installieren**
+```bash
+# (optional) virtuelles Environment
+python -m venv .venv && source .venv/bin/activate
 
-    Öffnen Sie ein Terminal oder eine Kommandozeile, navigieren Sie in das Verzeichnis, in dem Sie die Datei gespeichert haben, und installieren Sie die notwendigen Bibliotheken:
+# Abhängigkeiten
+pip install streamlit pandas plotly
 
-    ```bash
-    pip install streamlit pandas plotly
-    ```
+# App starten
+streamlit run app.py
+```
 
-3.  **Anwendung starten**
+Die App öffnet sich im Browser. Titel im UI: „Loan Dolphin“.
 
-    Führen Sie im selben Terminal den folgenden Befehl aus:
+## 🧪 Tests
 
-    ```bash
-    streamlit run finanzierungs_app_pro.py
-    ```
+Es gibt fokussierte Unit‑Tests für die Kernlogik (`core/*`).
 
-    Die Anwendung sollte sich automatisch in Ihrem Webbrowser öffnen.
+```bash
+pip install pytest pandas
+pytest -q
+```
 
-## 🛠️ Benutzung
+Abgedeckt werden u. a.:
 
-*   **Parameter anpassen:** Verwenden Sie die Seitenleiste (links), um alle globalen Parameter wie Gesamtkosten, Zinssätze, Tilgung und die Aufteilung der Finanzierung anzupassen.
-*   **Szenario speichern:** Wenn Sie eine interessante Konfiguration gefunden haben, klicken Sie auf "Aktuelle Konfiguration als 'Szenario A' speichern". Diese Konfiguration wird fixiert.
-*   **Vergleichen:** Ändern Sie nun die Parameter weiter. Die Ansicht "Szenario B (Aktuell)" wird sich live aktualisieren und Ihnen die Unterschiede zu Szenario A anzeigen.
-*   **Details analysieren:** Wechseln Sie zum Tab "Detailanalyse", um die Kreditaufteilung und den vollständigen Tilgungsplan für das aktuelle Szenario (B) zu sehen.
-*   **Sondertilgungen planen:** Im Expander "Sondertilgungen" können Sie zwischen automatischer und manueller Verteilung wählen.
-    *   **Automatische Verteilung:** Geben Sie einen jährlichen Sondertilgungsbetrag ein. Mit "Standardwert anwenden" können Sie die Tabelle mit einem Standardwert füllen.
-    *   **Manuelle Eingabe:** Weisen Sie die Sondertilgungen pro Kredit und Jahr manuell in der Tabelle zu.
+- Zuteilungslogik und KfW‑Kappungen; Rest an Hausbank.
+- Monatsraten‑Formel: `rate = summe * ((zins + tilgung) / 12)`.
+- Sondertilgung (automatisch): Fließt zu den jeweils höchsten Zinssätzen.
+- Restschuld nach Jahren: Aggregation über Tilgungspläne.
+- Hilfsfunktionen: Key‑Mapping, Prefix‑Filter, sicheres DataFrame‑Concat.
 
-**Haftungsausschluss:** Dieses Tool dient ausschließlich zu Simulations- und Demonstrationszwecken. Es stellt keine Finanzberatung dar. Alle Berechnungen sollten vor einer finanziellen Entscheidung von einem qualifizierten Fachmann überprüft werden.
+## 🧑‍💻 Nutzung
+
+- Parameter in der Sidebar anpassen (Kosten, Eigenkapital, Zuschüsse, Zinsen, Tilgung, KfW‑Limits).
+- Sondertilgungen je Partei: Automatische Verteilung oder manuelle Eingabe pro Kredit/Jahr.
+- „Szenario A“ speichern und mit der aktuellen Konfiguration („B“) vergleichen.
+- In „Detailanalyse“ die Tilgungsverläufe und Anteile je Produkt betrachten.
+
+## ⚠️ Hinweis
+
+Loan Dolphin ist ein Simulations‑ und Lern‑Tool und ersetzt keine individuelle
+Finanzberatung. Ergebnisse bitte vor Entscheidungen professionell prüfen lassen.
